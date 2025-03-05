@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EventlyTeen - Plan Your Dream Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input, select {
+            display: block;
+            margin: 8px 0 16px;
+            padding: 8px;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌟 EventlyTeen: Plan Your Dream Event!</h1>
+
+    <p>Welcom to EventlyTeen - your number one place for planning awsome events!</p> <!-- Bug 1: Typos -->
+
+    <label for="eventName">Event Name:</label>
+    <input type="text" id="eventName">
+
+    <label for="eventDate">Date:</label>
+    <input type="date" id="eventDate"> <!-- Bug 2: This will be limited in script below -->
+
+    <label for="eventType">Event Type:</label>
+    <select id="eventType">
+        <option>Birthday</option>
+        <option>Party</option>
+        <option>School Dance</option>
+        <option>Other</option>
+    </select>
+
+    <label for="playlist">Add a Playlist Link (optional):</label>
+    <input type="url" id="playlist">
+
+    <label for="guests">Number of Guests:</label>
+    <input type="number" id="guests" min="1" max="50"> <!-- Bug 4: Caps guest count -->
+
+    <button onclick="submitForm()">Plann Event</button> <!-- Bug 5: Typo -->
+
+    <div class="error" id="errorMessage"></div> <!-- Where error message will show -->
+
+    <h3>Event Image</h3>
+    <img src="broken-image.jpg" alt="Image failed to load"> <!-- Bug 7: Broken image -->
+
+    <p>📞 Contact us at support@eventlyteen.con</p> <!-- Bug 8: Wrong domain -->
+</div>
+
+<script>
+    // Bug 2: Limit date picker to 2024
+    const dateInput = document.getElementById('eventDate');
+    const maxDate = new Date('2024-12-31');
+    dateInput.setAttribute('max', maxDate.toISOString().split('T')[0]);
+
+    function submitForm() {
+        const errorMessage = document.getElementById('errorMessage');
+        const playlistLink = document.getElementById('playlist').value;
+
+        // Bug 3: Crash simulation if playlist URL contains "spotify"
+        if (playlistLink.includes("spotify")) {
+            errorMessage.innerText = "Form submision failed. Try agan."; // Bug 6: Typos
+            return;
+        }
+
+        errorMessage.innerText = "Form submision failed. Try agan."; // Bug 6: Typos
+    }
+</script>
+
+</body>
+</html>
