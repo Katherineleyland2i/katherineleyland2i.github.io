@@ -38,50 +38,103 @@
             color: red;
             margin-top: 10px;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🌟 EventlyTeen: Plan Your Dream Event!</h1>
 
-    <p>Welcom to EventlyTeen - your number one place for planning awsome events!</p> <!-- Bug 1: Typos -->
+    <!-- Login Section -->
+    <h2>Login to EventlyTeen</h2>
 
-    <label for="eventName">Event Name:</label>
-    <input type="text" id="eventName">
+    <label for="username">Username:</label>
+    <input type="text" id="username">
 
-    <label for="eventDate">Date:</label>
-    <input type="date" id="eventDate"> <!-- Bug 2: This will be limited in script below -->
+    <label for="password">Password:</label>
+    <input type="password" id="password">
 
-    <label for="eventType">Event Type:</label>
-    <select id="eventType">
-        <option>Birthday</option>
-        <option>Party</option>
-        <option>School Dance</option>
-        <option>Other</option>
-    </select>
+    <button onclick="login()">Login</button>
 
-    <label for="playlist">Add a Playlist Link (optional):</label>
-    <input type="url" id="playlist">
+    <div class="error" id="loginError"></div>
 
-    <label for="guests">Number of Guests:</label>
-    <input type="number" id="guests" min="1" max="50"> <!-- Bug 4: Caps guest count -->
+    <hr>
 
-    <button onclick="submitForm()">Plann Event</button> <!-- Bug 5: Typo -->
+    <!-- Main App Section (Hidden until login success) -->
+    <div id="appSection" class="hidden">
 
-    <div class="error" id="errorMessage"></div> <!-- Where error message will show -->
+        <h1>🌟 EventlyTeen: Plan Your Dream Event!</h1>
 
-    <h3>Event Image</h3>
-    <img src="broken-image.jpg" alt="Image failed to load"> <!-- Bug 7: Broken image -->
+        <p>Welcom to EventlyTeen - your number one place for planning awsome events!</p> <!-- Bug 1: Typos -->
 
-    <p>📞 Contact us at support@eventlyteen.con</p> <!-- Bug 8: Wrong domain -->
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName">
+
+        <label for="eventDate">Date:</label>
+        <input type="date" id="eventDate"> <!-- Bug 2: This will be limited in script below -->
+
+        <label for="eventType">Event Type:</label>
+        <select id="eventType">
+            <option>Birthday</option>
+            <option>Party</option>
+            <option>School Dance</option>
+            <option>Other</option>
+        </select>
+
+        <label for="playlist">Add a Playlist Link (optional):</label>
+        <input type="url" id="playlist">
+
+        <label for="guests">Number of Guests:</label>
+        <input type="number" id="guests" min="1" max="50"> <!-- Bug 4: Caps guest count -->
+
+        <button onclick="submitForm()">Plann Event</button> <!-- Bug 5: Typo -->
+
+        <div class="error" id="errorMessage"></div>
+
+        <h3>Event Image</h3>
+        <img src="broken-image.jpg" alt="Image failed to load"> <!-- Bug 7: Broken image -->
+
+        <p>📞 Contact us at support@eventlyteen.con</p> <!-- Bug 8: Wrong domain -->
+
+    </div>
 </div>
 
 <script>
     // Bug 2: Limit date picker to 2024
     const dateInput = document.getElementById('eventDate');
     const maxDate = new Date('2024-12-31');
-    dateInput.setAttribute('max', maxDate.toISOString().split('T')[0]);
+    if (dateInput) dateInput.setAttribute('max', maxDate.toISOString().split('T')[0]);
+
+    function login() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const loginError = document.getElementById('loginError');
+        const appSection = document.getElementById('appSection');
+
+        loginError.innerText = '';
+
+        // Basic Validation (with an intentional logic bug)
+        if (username.length < 4) {
+            loginError.innerText = "Username must be atleast 4 characters."; // Bug: "atleast" typo
+            return;
+        }
+        if (password.length < 6) {
+            loginError.innerText = "Password must be atleast 6 characters."; // Bug: "atleast" typo
+            return;
+        }
+
+        // Simulated "banned username" logic (more for fun)
+        if (username.toLowerCase() === "tester123") {
+            loginError.innerText = "This account is blocked for too many bugs!";
+            return;
+        }
+
+        // Login success — reveal the app!
+        appSection.classList.remove('hidden');
+        alert("Login successful!");  // Could be a nicer message if needed.
+    }
 
     function submitForm() {
         const errorMessage = document.getElementById('errorMessage');
